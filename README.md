@@ -1,96 +1,47 @@
-# SynthShell Core v1.0.0
+# SynthShell
 
-A asynchronous background and emergency shell framework for Python automation, scripting, and recovery control. Built with low-level Type-B inputs and hardened anti-tampering protection.
+**SynthShell** is a lightweight interactive framework-shell for rapid development of console software and automation scripts. It is written in pure Python with zero heavy external dependencies. Ideal for building custom CLI utilities for free.
 
----
-
-## Features
-
-* **Asynchronous Engine (`start_async`)**: Spawns a fully independent interactive terminal in a background thread without blocking the main script execution.
-* **Emergency Recovery Mode**: Can be deployed inside a global `try/except` block to act as a crash-dump shell (Drop to Shell) for instant system diagnostic and tracking.
-* **Type-B Safe Inputs**: Independent secure wrappers (`input_str`, `input_int`, `input_float`) with built-in validation. Prevents `NoneType` runtime crashes.
-* **File Automations**: Native, sandboxed commands for internal file operations (`make`, `delf`, `show`) without exposing dangerous high-level entry points.
-* **Anti-Tampering Shield**: Strict integrity check on the core runtime engine properties. Triggers a silent termination via `os._exit(0)` if authorship is violated.
-
----
+The developer receives a clean modular architecture, while the end-user gets a predictable step-by-step interface that guides them sequentially through interactive input prompts.
 
 ## Installation
-
-```bash
+```python
 pip install synthshell
 ```
 
----
+## Core API Methods
 
-## Usage Examples
+### Configuration & Extensions
+* **`s_shell(name)`** - Updates the main terminal prompt string (e.g., changing it to `myshell>`).
+* **`s_ver(name)`** - Sets the custom version string of your software (displayed inside the `about` menu).
+* **`s_author(name)`** - Registers your custom nickname as the software author.
+* **`add_command(cmd_name, func_object)`** - Dynamically registers a custom function as an executable command inside the engine using global dictionary mapping (no global keywords required).
 
-### 1. Interactive Application (Calculators, Quizzes)
-*Do not invoke `start_async()` when running interactive user loops to prevent console stream desynchronization.*
+### Core Engine & Interface
+* **`start()`** - Executes the main hard-blocking infinite loop of the terminal environment to parse input.
+* **`printf(text)`** - Prints a stylized text output prefixed with the current active shell name.
+* **`clear()`** - Wipes the terminal screen history completely (compatible with both Windows and Linux OS).
+* **`about()`** - Displays technical metadata, software author, framework creator (subnarcher), MIT License terms, and the official source code repository.
+* **`sysinfo()`** - Prints underlying system statistics including platform, Python runtime version, and current Process ID.
+* **`exitd(tm)`** - Terminates the process execution environment (supports optional execution delays handled via `teto.sleep`).
+* **`input_str(text)`** - Requests a plain string value. Automatically prefixes the line with `sw_shell>inputstr>text>`.
+* **`input_int(text)`** - Requests an integer value. Protected by an internal try/except block. If a non-integer is entered, it catches the exception, prints a clean error message, and prevents a raw crash.
+* **`input_float(text)`** - Requests a floating-point number. Also protected by an internal try/except block to safely catch parsing errors without breaking the execution flow.
+* **`inputf(text)`** - Unsafe/formatted input proxy. Used internally for sequential step-by-step data collection across operations (like `make`, `calc`, and `show`). It relies on `_check_unsafe(e)` to determine whether to mute errors or pass them to the developer.
 
-```python
-import synthshell_core as shell
+### Filesystem & Utility Operations
+* **`warp(path)`** - Shifts the active directory environment to the specified target disk destination (native `cd` behavior).
+* **`scan(path, mode)`** - Inspects target folder directories. Supported filtering flags: `items` (files only), `dirs` (folders only), or `all` (everything).
+* **`make(path, name, mode, encoding, text)`** - Spawns or rewrites a specified file. If positional parameters evaluate to None, it triggers sequential fallback prompts to collect inputs interactively.
+* **`show(path, name, encoding)`** - Parses the entire content array of a text file and flushes it straight into the active stdout stream.
+* **`delf(path, name)`** - Forces permanent file removal operations from the storage drive.
+* **`log(logs)`** - Safely writes diagnostic records directly into the active shell history file utilizing append data streams (`"a"` mode).
+* **`calc(num1, op, num2)`** - Built-in evaluation calculator handling basic operators (`+`, `-`, `*`, `/`, `**`, `//`, `%`) wrapped with integrated zero-division panic blocks.
+* **`run(name)`** - Spawns separate detached subprocess modules or operating system commands using system management tools.
 
-# Configure the software environment metadata
-shell.s_shell("CalcShell")
-shell.s_ver("1.0.0")
-shell.s_author("your_nickname")
-
-# Safe Type-B input usage (Trims spaces automatically)
-num1 = shell.input_float("first number")
-op = shell.input_str("operator")
-num2 = shell.input_float("second number")
-
-# Process natively via the internal safe evaluator
-shell.calc(num1, op, num2)
-```
-
-### 2. Background Routine (Loggers, Daemon Bots)
-*Launches an isolated management console while the main loop executes background tasks.*
-
-```python
-import shell
-import time
-
-shell.s_shell("SynthBot")
-shell.start_async() # Spawns the terminal environment into a background thread
-
-while True:
-    time.sleep(5)
-    shell.log("The script is quietly executing background operations...")
-```
-
-### 3. Recovery Console (Anti-Crash Fallback)
-*Prevents raw Windows error traces from interrupting execution, dropping the owner directly into the command line.*
-
-```python
-import shell
-
-shell.s_shell("RecoveryShell")
-
-try:
-    # Risky code path
-    result = 10 / 0
-except Exception as error:
-    shell.log(f"Critical execution failure: {error}")
-    print("\n[CRITICAL] Main script failed! Dropping into emergency shell...")
-    
-    shell.start() # Hard blocking fallback console. Type 'show' to view logs!
-```
+### Error Handling & Safety
+* **`unsafe(state)`** - Globally alters the debugging environment status parameter.
+* **`_check_unsafe(e)`** - Evaluation proxy. If the unsafe state resolves to True, it terminates safe execution and actively throws raw exception traces (`raise e`) to developers for debugging.
 
 ---
-
-## Core Console Commands
-
-* `show` — Read and view files instantly. Features smart default mapping to `{sw_shell}_logs.txt`.
-* `make` — Programmatic sandboxed file creation.
-* `del` — Secure file erasure wrapped inside access guards.
-* `calc` — `eval()`-free secure mathematical parser.
-* `sysinfo` — Instant environment reconnaissance (PID, OS, Platform).
-* `standarts` / `guide` — Automated local generation of development guidelines and manual files.
-* `clear` — Cross-platform screen wiper for quick terminal cloaking.
-
----
-
-## License & Copyright
-
-Developed globally by **subnarcher**. Hardcoded core rules cannot be modified. Released under the open and free **MIT License**.
+License: **MIT License** (The hardcoded framework creator attribution `subnarcher` must remain intact inside the `about` method).
