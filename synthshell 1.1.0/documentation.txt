@@ -1,15 +1,15 @@
 Synthshell Documentation.
 Synthshell is a PyPI framework for console software.
-Reference guide to shell methods and commands You can in README.md
+Reference guide to shell methods and commands You can in be find in README.md
 LICENSE: The project uses the MIT license.
 Documentation: The documentation has been translated from Russian into English.
 How to use: Type it into the terminal: pip install synthshell
 
 ===========================================================================================================================================================================================
-STANDARTS: SynthShell Standarts 1 (SSS 1) for version 1.1.0
+STANDARTS: SynthShell Standards 1 (SSS 1) for version 1.1.0
 This document outlines important—though not mandatory—coding guidelines for the SynthShell framework. All third-party developers and module authors are expected to adhere to these standards to ensure system stability.
 
-§ synchronization and data input item:
+§ synchronization and data input:
 
 1. Prohibition of concurrent input: The operating system console is a shared global resource of the process. Simultaneous data input requests from different threads are strictly prohibited. This leads to input buffer corruption and critical operating system failures.
 2.Linear execution: The program must execute in strict sequence. All interactive scripts, questionnaires, and utilities must request data step-by-step, using the framework's built-in input functions.
