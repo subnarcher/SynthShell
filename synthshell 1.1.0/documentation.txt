@@ -1,1 +1,32 @@
+Synthshell Documentation.
+Synthshell is a PyPI framework for console software.
+Reference guide to shell methods and commands You can in README.md
+LICENSE: The project uses the MIT license.
+Documentation: The documentation has been translated from Russian into English.
+How to use: Type it into the terminal: pip install synthshell
 
+===========================================================================================================================================================================================
+STANDARTS: SynthShell Standarts 1 (SSS 1) for version 1.1.0
+This document outlines important—though not mandatory—coding guidelines for the SynthShell framework. All third-party developers and module authors are expected to adhere to these standards to ensure system stability.
+
+§ synchronization and data input item:
+
+1. Prohibition of concurrent input: The operating system console is a shared global resource of the process. Simultaneous data input requests from different threads are strictly prohibited. This leads to input buffer corruption and critical operating system failures.
+2.Linear execution: The program must execute in strict sequence. All interactive scripts, questionnaires, and utilities must request data step-by-step, using the framework's built-in input functions.
+
+§ Interface and interaction standards (UX/UI):
+
+1. Plain text in prompts: When passing text to any input method (e.g., `input_float("text")`), do not manually add colons, arrows, or spaces to the end of the string. The system direction indicator (>) is added automatically by the framework.
+
+§ Disaster Recovery Protocol (Error Handling):
+
+1. System exception handling: The main automation script must not crash and display a standard Windows error trace. This spoils the user interface.
+2.Isolating hazardous code: Developers must wrap critical code blocks (such as file operations, network interactions, or mathematical calculations) in a try/except construct.
+3.Failure behavior: In the event of a critical error, exception data must be written to the log file using the log(). method. Immediately thereafter, the program must call the start() method to force the user back to the secure recovery console, where they can enter the show command to investigate the cause of the failure.
+
+§ Exceptions to the rules (Improving user experience):
+
+1.Приоритет удобства над догмами: В исключительных случаях разработчикам разрешается нарушать данные стандарты, если жесткое следование правилам ухудшает конечный пользовательский опыт (UX).
+2.Hybrid methods: The creation of combined utilities (e.g., outputting text and simultaneously writing a log in a single step) is permissible if it reduces the number of routine user actions and protects against accidental input errors.
+3.A deliberate approach: Deviating from standards should be a reasoned decision to handle specific edge cases, not the result of sloppy coding. The key criterion is that the interface must remain intuitive and predictable.
+=========================================================================================================================================================================================
