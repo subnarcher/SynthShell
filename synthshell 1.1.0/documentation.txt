@@ -26,7 +26,7 @@ This document outlines important—though not mandatory—coding guidelines for 
 
 § Exceptions to the rules (Improving user experience):
 
-1.Приоритет удобства над догмами: В исключительных случаях разработчикам разрешается нарушать данные стандарты, если жесткое следование правилам ухудшает конечный пользовательский опыт (UX).
+Prioritizing convenience over dogma: In exceptional cases, developers are permitted to deviate from these standards if strict adherence to the rules compromises the end-user experience (UX).
 2.Hybrid methods: The creation of combined utilities (e.g., outputting text and simultaneously writing a log in a single step) is permissible if it reduces the number of routine user actions and protects against accidental input errors.
 3.A deliberate approach: Deviating from standards should be a reasoned decision to handle specific edge cases, not the result of sloppy coding. The key criterion is that the interface must remain intuitive and predictable.
 =========================================================================================================================================================================================
