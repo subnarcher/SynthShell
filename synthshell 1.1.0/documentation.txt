@@ -5,8 +5,8 @@ LICENSE: The project uses the MIT license.
 Documentation: The documentation has been translated from Russian into English.
 How to use: Type it into the terminal: pip install synthshell
 
-===========================================================================================================================================================================================
-STANDARTS: SynthShell Standards 1 (SSS 1) for version 1.1.0
+===================================================================================================================================================================================
+STANDARDS: SynthShell Standards 1 (SSS 1) for version 1.1.0
 This document outlines important—though not mandatory—coding guidelines for the SynthShell framework. All third-party developers and module authors are expected to adhere to these standards to ensure system stability.
 
 § synchronization and data input:
@@ -29,4 +29,8 @@ This document outlines important—though not mandatory—coding guidelines for 
 Prioritizing convenience over dogma: In exceptional cases, developers are permitted to deviate from these standards if strict adherence to the rules compromises the end-user experience (UX).
 2.Hybrid methods: The creation of combined utilities (e.g., outputting text and simultaneously writing a log in a single step) is permissible if it reduces the number of routine user actions and protects against accidental input errors.
 3.A deliberate approach: Deviating from standards should be a reasoned decision to handle specific edge cases, not the result of sloppy coding. The key criterion is that the interface must remain intuitive and predictable.
-=========================================================================================================================================================================================
+
+§ Interface and Interaction Standards (UX/UI):
+
+1.Prohibition of standard I/O functions:
+The use of Python's built-in `print()` and `input()` functions is strictly prohibited in all third-party modules and utilities. These functions bypass the SynthShell core, resulting in disrupted automatic indentation, corruption of the prompt indicator (>), and a breakdown of the unified interface style. Developers must use the `printf()` method for text output and the framework's corresponding system functions (e.g., `inputf()` or `input_float()`) for data input.
