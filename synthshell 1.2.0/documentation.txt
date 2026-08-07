@@ -1,1 +1,37 @@
+SynthShell Documentation
+SynthShell is a PyPI framework for console software.
+Reference guide to shell methods and commands can be found in README.md.
 
+LICENSE: The project uses the MIT license.
+Documentation: The documentation has been translated from Russian into English.
+How to use: Type it into the terminal: pip install synthshell
+
+===================================================================================================================================================================================
+
+STANDARDS: SynthShell Standards 1 (SSS 1) for version 1.2.0
+
+This document outlines important—though not mandatory—coding guidelines for the SynthShell framework. All third-party developers and module authors are expected to adhere to these standards to ensure system stability.
+
+§ Synchronization and Data Input:
+1. Prohibition of concurrent input: The operating system console is a shared global resource of the process. Simultaneous data input requests from different threads are strictly prohibited. This leads to input buffer corruption and critical operating system failures.
+2. Linear execution: The program must execute in strict sequence. All interactive scripts, questionnaires, and utilities must request data step-by-step, using the framework's built-in input functions.
+
+§ Interface and Interaction Standards (UX/UI):
+1. Plain text in prompts: When passing text to any input method (e.g., input_float("text")), do not manually add colons, arrows, or spaces to the end of the string. The system direction indicator (>) is added automatically by the framework.
+2. Prohibition of standard I/O functions: The use of Python's built-in print() and input() functions is strictly prohibited in all third-party modules and utilities. These functions bypass the SynthShell core, resulting in disrupted automatic indentation, corruption of the prompt indicator (>), and a breakdown of the unified interface style. Developers must use the printf() method for text output and the framework's corresponding system functions (e.g., inputf() or input_float()) for data input.
+
+§ Function Signatures and Arguments:
+1. Recommended default values: When writing functions for custom commands, it is highly recommended to use None as a default value for arguments where appropriate (e.g., def my_command(path=None):). This prevents the system from crashing with a TypeError if an end-user runs the command without arguments, allowing your code to smoothly fall back to interactive step-by-step prompts.
+
+§ Disaster Recovery Protocol (Error Handling):
+1. System exception handling: The main automation script must not crash and display a standard Windows error trace. This spoils the user interface.
+2. Isolating hazardous code: Developers must wrap critical code blocks (such as file operations, network interactions, or mathematical calculations) in a try/except construct.
+3. Failure behavior: In the event of a critical error, exception data must be written to the log file using the log() method. Immediately thereafter, the program must return the user to a secure environment:
+   * If the user is running the standard environment, the program must call start().
+   * If the user is running the clean modular core environment, the program must call start_core().
+   This ensures they are safely forced back to the secure recovery console, where they can enter the show command to investigate the cause of the failure.
+
+§ Exceptions to the Rules (Improving User Experience):
+1. Prioritizing convenience over dogma: In exceptional cases, developers are permitted to deviate from these standards if strict adherence to the rules compromises the end-user experience (UX).
+2. Hybrid methods: The creation of combined utilities (e.g., outputting text and simultaneously writing a log in a single step) is permissible if it reduces the number of routine user actions and protects against accidental input errors.
+3. A deliberate approach: Deviating from standards should be a reasoned decision to handle specific edge cases, not the result of sloppy coding. The key criterion is that the interface must remain intuitive and predictable.
