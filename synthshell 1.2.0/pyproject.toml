@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "synthshell"
+version = "1.2.0"
+authors = [
+  { name="subnarcher" },
+]
+description = "Framework for console software"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/subnarcher/SynthShell/tree/main"
+[tool.hatch.build.targets.wheel]
+packages = ["src/synthshell"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src"]
