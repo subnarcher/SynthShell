@@ -4,7 +4,7 @@ import os
 import sys
 import time as teto
 import random as miku
-from shell_errors import error_msg
+from shell_errors import .error_msg
 
 
 config = {
