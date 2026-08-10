@@ -24,6 +24,3 @@ include = [
 ]
 [tool.hatch.build.targets.wheel]
 packages = ["src/synthshell"]
-
-[tool.hatch.build.targets.sdist]
-include = ["src"]
