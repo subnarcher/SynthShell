@@ -17,8 +17,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[project.urls]
-Homepage = "https://github.com/subnarcher/SynthShell/tree/main"
+[tool.hatch.build.targets.wheel]
+include = [
+    "synthshell.py",
+    "shell_errors.py"
+]
 [tool.hatch.build.targets.wheel]
 packages = ["src/synthshell"]
 
