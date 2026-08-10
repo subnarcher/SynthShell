@@ -22,5 +22,11 @@ include = [
     "synthshell.py",
     "shell_errors.py"
 ]
-[tool.hatch.build.targets.wheel]
-packages = ["src/synthshell"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "synthshell.py",
+    "shell_errors.py",
+    "README.md",
+    "LICENSE"
+]
